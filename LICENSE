@@ -1,0 +1,122 @@
+LICENÇA JARVIS 1.0
+==================
+
+Copyright (c) 2026 — Projeto Jarvis 1.0
+
+Este software é disponibilizado sob os termos abaixo (“Licença”).
+Ao usar, copiar, modificar ou distribuir o Jarvis 1.0, você concorda com estes termos.
+
+
+1. DEFINIÇÕES
+-------------
+“Software” significa o código-fonte, scripts, documentação, arquivos de configuração
+e demais materiais incluídos no pacote Jarvis 1.0.
+
+“Usuário” significa qualquer pessoa que execute, copie, modifique ou distribua o Software.
+
+
+2. CONCESSÃO DE DIREITOS (USOS PERMITIDOS)
+-----------------------------------------
+É permitido, sem custo de licença ao autor desta distribuição:
+
+  a) Usar o Software para fins pessoais, educacionais, de pesquisa e profissionais;
+  b) Copiar e instalar o Software em computadores de sua propriedade ou sob seu controle;
+  c) Modificar o código-fonte para adaptação às suas necessidades;
+  d) Criar plugins, módulos e integrações próprios;
+  e) Distribuir cópias do Software original ou modificado, desde que:
+     - mantenha este arquivo LICENSE (ou texto equivalente) junto à distribuição;
+     - não remova avisos de autoria presentes nos arquivos de origem;
+     - deixe claro, se modificado, que se trata de uma versão alterada.
+
+
+3. USOS COM RESTRIÇÕES / NÃO PERMITIDOS
+---------------------------------------
+Não é permitido:
+
+  a) Usar o Software para atividades ilegais, incluindo fraude, invasão de sistemas,
+     assédio, distribuição de malware ou violação de privacidade de terceiros;
+  b) Apresentar o Software (ou versões derivadas) como se fosse produto oficial de
+     terceiros (por exemplo, marcas de filmes, empresas ou assistentes comerciais)
+     de forma enganosa;
+  c) Revender o Software “fechado” como se fosse de sua autoria exclusiva, sem
+     indicar que é baseado no Jarvis 1.0 e sem incluir esta Licença;
+  d) Utilizar recursos de controle do computador (desligar, apagar arquivos, enviar
+     mensagens, etc.) sobre máquinas ou contas de terceiros sem autorização explícita.
+
+
+4. INTELIGÊNCIA ARTIFICIAL, VOZ E DADOS LOCAIS
+---------------------------------------------
+  a) O Software pode enviar textos a modelos locais (ex.: Ollama) ou, se configurado
+     pelo Usuário, a serviços externos. O Usuário é responsável pelas chaves, contas
+     e políticas desses serviços.
+  b) Dados de voz, memória, feedback e histórico são armazenados localmente por padrão.
+     O Usuário é responsável por proteger esses dados e por obter consentimento se
+     gravar ou processar a voz de outras pessoas.
+  c) O módulo de autoaperfeiçoamento NÃO está autorizado a alterar o núcleo do Software
+     sem confirmação do Usuário. Propostas de código devem ser revisadas antes de
+     qualquer aplicação manual.
+  d) Plugins e código gerado automaticamente podem executar ações com os mesmos
+     privilégios do processo do Jarvis. Ative apenas plugins que você revisou.
+
+
+5. DEPENDÊNCIAS DE TERCEIROS
+----------------------------
+O Software utiliza bibliotecas e ferramentas de terceiros (Python, Ollama, modelos de
+linguagem, edge-tts, Whisper, etc.), cada uma com sua própria licença. Esta Licença
+não altera os termos dessas dependências. O Usuário deve cumprir as licenças dos
+modelos e serviços que escolher baixar ou usar.
+
+
+6. MARCAS E REFERÊNCIAS
+-----------------------
+O nome “Jarvis” e referências a assistentes fictícios são usadas de forma descritiva
+e não afiliada. Este projeto não é endossado por estúdios, empresas ou detentores de
+marcas relacionadas a obras de ficção.
+
+
+7. AUSÊNCIA DE GARANTIA
+-----------------------
+O SOFTWARE É FORNECIDO “COMO ESTÁ”, SEM GARANTIAS DE QUALQUER TIPO, EXPRESSAS OU
+IMPLÍCITAS, INCLUINDO MAS NÃO SE LIMITANDO A COMERCIALIZAÇÃO, ADEQUAÇÃO A UM
+PROPÓSITO ESPECÍFICO E NÃO VIOLAÇÃO.
+
+O Usuário assume todo o risco decorrente do uso, incluindo perda de dados, execução
+incorreta de comandos no sistema operacional e respostas incorretas do modelo de IA.
+
+
+8. LIMITAÇÃO DE RESPONSABILIDADE
+--------------------------------
+Em nenhuma hipótese os autores ou distribuidores serão responsáveis por danos
+diretos, indiretos, incidentais, especiais, consequenciais ou punitivos, incluindo
+lucros cessantes, mesmo que avisados da possibilidade de tais danos, na máxima
+extensão permitida pela lei aplicável.
+
+
+9. AÇÕES SENSÍVEIS DO SISTEMA
+-----------------------------
+Comandos que desligam o computador, apagam arquivos, enviam mensagens, controlam
+volume/mídia ou automatizam o desktop podem causar efeitos irreversíveis.
+Recomenda-se usar confirmação antes de ações destrutivas e não executar o Software
+com privilégios desnecessários.
+
+
+10. RESCISÃO
+------------
+Os direitos concedidos por esta Licença terminam automaticamente se você violar
+seus termos. As seções sobre garantia, responsabilidade e leis sobrevivem à rescisão.
+
+
+11. LEI APLICÁVEL
+-----------------
+Na ausência de acordo em contrário, interpreta-se esta Licença de acordo com as leis
+do país de residência do Usuário, sem prejuízo de normas imperativas de proteção ao
+consumidor.
+
+
+12. ACEITE
+----------
+O uso do Software constitui aceite desta Licença. Se você não concordar, não use,
+não copie e não distribua o Software.
+
+
+Fim da Licença Jarvis 1.0

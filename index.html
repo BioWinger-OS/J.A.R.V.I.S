@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jarvis 1.0 — Download</title>
+  <meta name="description" content="Download completo do Jarvis 1.0 — assistente local de programação com modo escrita e voz opcional." />
+  <style>
+    :root {
+      --bg: #070b14;
+      --card: #0f172a;
+      --line: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --accent2: #5eead4;
+      --warn: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #134e4a55, transparent),
+        radial-gradient(900px 500px at 100% 0%, #1e3a5f44, transparent),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .orb {
+      width: 72px; height: 72px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, var(--accent2), var(--accent) 45%, #0f766e 80%);
+      box-shadow: 0 0 40px #14b8a666, inset 0 0 20px #5eead455;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 30px #14b8a655; }
+      50% { transform: scale(1.05); box-shadow: 0 0 50px #14b8a888; }
+    }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin: 0 0 8px;
+      letter-spacing: 0.04em;
+    }
+    h1 span { color: var(--accent2); }
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+    .card {
+      background: color-mix(in srgb, var(--card) 92%, black);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 20px 50px #00000055;
+    }
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      color: var(--accent2);
+    }
+    p { color: var(--muted); margin: 0 0 12px; }
+    ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+    li { margin-bottom: 6px; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 22px;
+      border-radius: 12px;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    a.btn:hover { transform: translateY(-1px); }
+    a.btn-primary {
+      background: linear-gradient(135deg, #0d9488, #14b8a6);
+      color: #042f2e;
+      box-shadow: 0 8px 24px #14b8a644;
+    }
+    a.btn-primary:hover { box-shadow: 0 12px 28px #14b8a666; }
+    a.btn-ghost {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: #0b1220;
+    }
+    a.btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
+    code, .path {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.9em;
+      background: #020617;
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #a5f3fc;
+    }
+    pre {
+      background: #020617;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      color: #cbd5e1;
+      font-size: 0.88rem;
+    }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .meta div {
+      background: #020617;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .meta strong { display: block; color: var(--accent2); font-size: 1.05rem; }
+    .meta span { color: var(--muted); font-size: 0.8rem; }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 28px;
+    }
+    footer a { color: var(--accent2); }
+    .note {
+      border-left: 3px solid var(--warn);
+      padding: 10px 14px;
+      background: #42200633;
+      border-radius: 0 10px 10px 0;
+      color: #fde68a;
+      font-size: 0.9rem;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="orb" aria-hidden="true"></div>
+      <h1>J.A.R.V.I.S. <span>1.0</span></h1>
+      <p>Assistente local · modo escrita · programação · voz sob demanda</p>
+      <div class="tag">Pacote completo · Windows · Python + Ollama</div>
+    </header>
+
+    <section class="card">
+      <h2>Download completo</h2>
+      <p>
+        Baixe o arquivo <span class="path">Jarvis_1.0.zip</span> com código, módulos,
+        <span class="path">README.md</span>, <span class="path">LICENSE</span> e scripts de início.
+      </p>
+      <div class="meta">
+        <div><strong>ZIP</strong><span>pacote único</span></div>
+        <div><strong>Escrita</strong><span>padrão sem microfone</span></div>
+        <div><strong>Coder</strong><span>qwen2.5-coder</span></div>
+        <div><strong>Licença</strong><span>arquivo LICENSE</span></div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="Jarvis_1.0.zip" download="Jarvis_1.0.zip" id="dl">
+          ↓ Baixar Jarvis_1.0.zip
+        </a>
+        <a class="btn btn-ghost" href="Jarvis/README.md" download>README.md</a>
+        <a class="btn btn-ghost" href="Jarvis/LICENSE" download>LICENSE</a>
+      </div>
+      <p class="note">
+        Após baixar, extraia o ZIP, instale as dependências e o Ollama. Leia o README e a LICENSE antes de usar.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Instalação rápida</h2>
+      <pre>cd Jarvis
+python -m pip install -r requirements.txt
+ollama pull qwen2.5-coder:7b
+python jarvis.py</pre>
+      <p>
+        Padrão: <strong>modo escrita</strong> (só teclado). Para microfone, digite
+        <code>modo escuta</code>.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>O que inclui</h2>
+      <ul>
+        <li>Núcleo <code>jarvis.py</code> e módulos (voz, bandeja, autoaperfeiçoamento, avançados)</li>
+        <li>Modo escrita padrão + modelo de programação</li>
+        <li>Banco de voz do dono, plugins, memória local</li>
+        <li>Documentação unificada no README e licença completa de usos</li>
+        <li><code>Iniciar_Jarvis.vbs</code> (Windows, sem janela preta)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Usos e limites</h2>
+      <p>
+        Uso pessoal, educacional e profissional permitido, com redistribuição desde que a
+        LICENSE acompanhe o pacote. Proibido uso ilegal ou enganoso. Sem garantia —
+        comandos de sistema (desligar, apagar arquivos, etc.) são por sua conta.
+      </p>
+      <p>Texto integral: arquivo <span class="path">LICENSE</span> dentro do ZIP e no link acima.</p>
+    </section>
+
+    <footer>
+      <p>Jarvis 1.0 · documentação em README.md · termos em LICENSE</p>
+      <p>Abra este <code>index.html</code> na mesma pasta do <code>Jarvis_1.0.zip</code> para o botão de download funcionar.</p>
+    </footer>
+  </div>
+  <script>
+    // Feedback visual no clique
+    document.getElementById("dl").addEventListener("click", function () {
+      this.textContent = "↓ Baixando…";
+      setTimeout(() => { this.textContent = "↓ Baixar Jarvis_1.0.zip"; }, 2000);
+    });
+  </script>
+</body>
+</html>
