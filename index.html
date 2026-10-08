@@ -1,241 +1,556 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jarvis 1.0 — Download</title>
-  <meta name="description" content="Download completo do Jarvis 1.0 — assistente local de programação com modo escrita e voz opcional." />
+  <meta name="description" content="J.A.R.V.I.S. — Assistente local em Python com voz, automação, plugins e autoaperfeiçoamento." />
+  <title>J.A.R.V.I.S. — Assistente Local Inteligente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Aplica tema antes do paint (evita flash)
+    (function () {
+      try {
+        var t = localStorage.getItem('jarvis-theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#d4af37', light: '#f0d78c', dim: '#a68b2b' },
+            crimson: { DEFAULT: '#c41e3a', soft: '#e85a6b', deep: '#8b1528' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'Consolas', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #070b14;
-      --card: #0f172a;
-      --line: #1e293b;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --accent: #14b8a6;
-      --accent2: #5eead4;
-      --warn: #fbbf24;
+    html { scroll-behavior: smooth; }
+
+    /* ===== TEMA PRETO (dark) ===== */
+    [data-theme="dark"] {
+      --bg: #09090b;
+      --bg-glow-1: rgba(212, 175, 55, 0.12);
+      --bg-glow-2: rgba(196, 30, 58, 0.06);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.55);
+      --text-faint: rgba(255, 255, 255, 0.35);
+      --text-dim: rgba(255, 255, 255, 0.25);
+      --glass-bg: rgba(15, 17, 23, 0.72);
+      --glass-border: rgba(212, 175, 55, 0.14);
+      --nav-border: rgba(255, 255, 255, 0.06);
+      --card-hover-border: rgba(212, 175, 55, 0.4);
+      --card-hover-shadow: 0 12px 40px -12px rgba(212, 175, 55, 0.22);
+      --ring: 0 0 0 1px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+      --terminal-bg: rgba(0, 0, 0, 0.55);
+      --terminal-border: rgba(255, 255, 255, 0.1);
+      --outline-border: rgba(255, 255, 255, 0.15);
+      --outline-hover-bg: rgba(212, 175, 55, 0.08);
+      --code: rgba(240, 215, 140, 0.9);
+      --gradient-title: linear-gradient(135deg, #ffffff 0%, #f0d78c 45%, #d4af37 75%, #e85a6b 100%);
+      --footer-border: rgba(255, 255, 255, 0.06);
+      --icon-bg: rgba(212, 175, 55, 0.1);
+      --icon-border: rgba(212, 175, 55, 0.22);
+      --step-bg: rgba(212, 175, 55, 0.15);
+      --toggle-bg: rgba(255, 255, 255, 0.06);
+      --toggle-border: rgba(255, 255, 255, 0.12);
     }
-    * { box-sizing: border-box; }
+
+    /* ===== TEMA BRANCO (light) ===== */
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-glow-1: rgba(212, 175, 55, 0.18);
+      --bg-glow-2: rgba(196, 30, 58, 0.08);
+      --text: #0a0a0a;
+      --text-muted: rgba(10, 10, 10, 0.58);
+      --text-faint: rgba(10, 10, 10, 0.42);
+      --text-dim: rgba(10, 10, 10, 0.32);
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-border: rgba(212, 175, 55, 0.28);
+      --nav-border: rgba(0, 0, 0, 0.08);
+      --card-hover-border: rgba(196, 30, 58, 0.35);
+      --card-hover-shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.12);
+      --ring: 0 0 0 1px rgba(212, 175, 55, 0.22), inset 0 1px 0 rgba(255,255,255,0.8);
+      --terminal-bg: #111113;
+      --terminal-border: rgba(0, 0, 0, 0.12);
+      --outline-border: rgba(0, 0, 0, 0.14);
+      --outline-hover-bg: rgba(212, 175, 55, 0.12);
+      --code: #8b6914;
+      --gradient-title: linear-gradient(135deg, #1a1a1a 0%, #a68b2b 40%, #d4af37 70%, #c41e3a 100%);
+      --footer-border: rgba(0, 0, 0, 0.08);
+      --icon-bg: rgba(212, 175, 55, 0.12);
+      --icon-border: rgba(212, 175, 55, 0.35);
+      --step-bg: rgba(212, 175, 55, 0.18);
+      --toggle-bg: rgba(0, 0, 0, 0.04);
+      --toggle-border: rgba(0, 0, 0, 0.12);
+    }
+
     body {
-      margin: 0;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       background:
-        radial-gradient(1200px 600px at 10% -10%, #134e4a55, transparent),
-        radial-gradient(900px 500px at 100% 0%, #1e3a5f44, transparent),
+        radial-gradient(ellipse 80% 50% at 50% -20%, var(--bg-glow-1), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, var(--bg-glow-2), transparent),
         var(--bg);
       color: var(--text);
-      line-height: 1.55;
-      min-height: 100vh;
+      transition: background 0.35s ease, color 0.25s ease;
     }
-    .wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
+
+    .text-gradient {
+      background: var(--gradient-title);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    header {
-      text-align: center;
-      margin-bottom: 36px;
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
-    .orb {
-      width: 72px; height: 72px;
-      margin: 0 auto 16px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, var(--accent2), var(--accent) 45%, #0f766e 80%);
-      box-shadow: 0 0 40px #14b8a666, inset 0 0 20px #5eead455;
-      animation: pulse 2.4s ease-in-out infinite;
+    .ring-gold { box-shadow: var(--ring); }
+    .text-muted { color: var(--text-muted); }
+    .text-faint { color: var(--text-faint); }
+    .text-dim { color: var(--text-dim); }
+    .code-accent { color: var(--code); }
+    .nav-bar { border-bottom: 1px solid var(--nav-border); }
+    .footer-bar { border-top: 1px solid var(--footer-border); }
+    .section-line { border-top: 1px solid var(--footer-border); }
+
+    .card-hover {
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 30px #14b8a655; }
-      50% { transform: scale(1.05); box-shadow: 0 0 50px #14b8a888; }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover-border);
+      box-shadow: var(--card-hover-shadow);
     }
-    h1 {
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      margin: 0 0 8px;
-      letter-spacing: 0.04em;
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37 0%, #f0d78c 50%, #d4af37 100%);
+      background-size: 200% 100%;
+      color: #0a0a0a;
+      transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
     }
-    h1 span { color: var(--accent2); }
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 8px;
+    .btn-gold:hover {
+      background-position: 100% 0;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px -4px rgba(212, 175, 55, 0.45);
     }
-    .card {
-      background: color-mix(in srgb, var(--card) 92%, black);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 28px;
-      margin-bottom: 20px;
-      box-shadow: 0 20px 50px #00000055;
+    .btn-outline {
+      border: 1px solid var(--outline-border);
+      color: var(--text-muted);
+      transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
     }
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 1.15rem;
-      color: var(--accent2);
-    }
-    p { color: var(--muted); margin: 0 0 12px; }
-    ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
-    li { margin-bottom: 6px; }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-    a.btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 14px 22px;
-      border-radius: 12px;
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    a.btn:hover { transform: translateY(-1px); }
-    a.btn-primary {
-      background: linear-gradient(135deg, #0d9488, #14b8a6);
-      color: #042f2e;
-      box-shadow: 0 8px 24px #14b8a644;
-    }
-    a.btn-primary:hover { box-shadow: 0 12px 28px #14b8a666; }
-    a.btn-ghost {
-      border: 1px solid var(--line);
+    .btn-outline:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      background: var(--outline-hover-bg);
       color: var(--text);
-      background: #0b1220;
     }
-    a.btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
-    code, .path {
-      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
-      font-size: 0.9em;
-      background: #020617;
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: #a5f3fc;
+
+    .nav-link { position: relative; color: var(--text-muted); }
+    .nav-link:hover { color: var(--text); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, #d4af37, #e85a6b);
+      transition: width 0.25s ease;
     }
-    pre {
-      background: #020617;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px 16px;
-      overflow-x: auto;
-      color: #cbd5e1;
-      font-size: 0.88rem;
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #d4af37; }
+
+    .stat-num { font-variant-numeric: tabular-nums; }
+    .icon-box {
+      background: var(--icon-bg);
+      border: 1px solid var(--icon-border);
     }
-    .meta {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-top: 8px;
+    .step-num {
+      background: var(--step-bg);
+      color: #d4af37;
     }
-    .meta div {
-      background: #020617;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
+    .step-num-red {
+      background: rgba(196, 30, 58, 0.15);
+      color: #e85a6b;
     }
-    .meta strong { display: block; color: var(--accent2); font-size: 1.05rem; }
-    .meta span { color: var(--muted); font-size: 0.8rem; }
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 28px;
+    .terminal {
+      background: var(--terminal-bg);
+      border: 1px solid var(--terminal-border);
     }
-    footer a { color: var(--accent2); }
-    .note {
-      border-left: 3px solid var(--warn);
-      padding: 10px 14px;
-      background: #42200633;
-      border-radius: 0 10px 10px 0;
-      color: #fde68a;
-      font-size: 0.9rem;
-      margin-top: 16px;
+    [data-theme="light"] .terminal pre,
+    [data-theme="light"] .terminal code {
+      color: #f0d78c !important;
     }
+    [data-theme="light"] .terminal .term-label { color: rgba(255,255,255,0.35); }
+
+    .theme-toggle {
+      background: var(--toggle-bg);
+      border: 1px solid var(--toggle-border);
+      color: var(--text-muted);
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .theme-toggle:hover {
+      border-color: rgba(212, 175, 55, 0.45);
+      color: var(--text);
+    }
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: block; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+    .logo-text { color: var(--text); }
+    .logo-os { color: rgba(212, 175, 55, 0.85); }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="orb" aria-hidden="true"></div>
-      <h1>J.A.R.V.I.S. <span>1.0</span></h1>
-      <p>Assistente local · modo escrita · programação · voz sob demanda</p>
-      <div class="tag">Pacote completo · Windows · Python + Ollama</div>
-    </header>
+<body class="font-sans antialiased min-h-screen">
 
-    <section class="card">
-      <h2>Download completo</h2>
-      <p>
-        Baixe o arquivo <span class="path">Jarvis_1.0.zip</span> com código, módulos,
-        <span class="path">README.md</span>, <span class="path">LICENSE</span> e scripts de início.
-      </p>
-      <div class="meta">
-        <div><strong>ZIP</strong><span>pacote único</span></div>
-        <div><strong>Escrita</strong><span>padrão sem microfone</span></div>
-        <div><strong>Coder</strong><span>qwen2.5-coder</span></div>
-        <div><strong>Licença</strong><span>arquivo LICENSE</span></div>
-      </div>
-      <div class="actions">
-        <a class="btn btn-primary" href="Jarvis_1.0.zip" download="Jarvis_1.0.zip" id="dl">
-          ↓ Baixar Jarvis_1.0.zip
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-50 glass nav-bar">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <a href="#topo" class="flex items-center gap-2 group shrink-0">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-gold to-crimson flex items-center justify-center text-black font-bold text-sm shadow-lg shadow-gold/20">J</span>
+        <span class="font-semibold tracking-wide text-sm sm:text-base">
+          <span class="logo-text group-hover:opacity-90 transition-opacity">J.A.R.V.I.S.</span>
+          <span class="logo-os font-normal text-xs sm:text-sm ml-1">OS</span>
+        </span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7 text-sm">
+        <a href="#recursos" class="nav-link">Recursos</a>
+        <a href="#estrutura" class="nav-link">Estrutura</a>
+        <a href="#requisitos" class="nav-link">Requisitos</a>
+        <a href="#documentacao" class="nav-link">Documentação</a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button type="button" id="theme-toggle" class="theme-toggle w-9 h-9 rounded-lg flex items-center justify-center" title="Alternar tema" aria-label="Alternar modo claro/escuro">
+          <!-- sol (aparece no modo claro = clicar vai para escuro) -->
+          <svg class="icon-sun w-4.5 h-4.5 w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1.5M12 19.5V21M4.5 12H3m18 0h-1.5M6.3 6.3l-1-1m13.4 13.4l-1-1M6.3 17.7l-1 1m13.4-13.4l-1 1M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+          <!-- lua (aparece no modo escuro = clicar vai para claro) -->
+          <svg class="icon-moon w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <a href="Jarvis_1.0_completo.zip" download
+           class="btn-gold font-semibold text-sm px-3 sm:px-4 py-2 rounded-lg inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/></svg>
+          <span class="hidden xs:inline sm:inline">Download</span>
         </a>
-        <a class="btn btn-ghost" href="Jarvis/README.md" download>README.md</a>
-        <a class="btn btn-ghost" href="Jarvis/LICENSE" download>LICENSE</a>
       </div>
-      <p class="note">
-        Após baixar, extraia o ZIP, instale as dependências e o Ollama. Leia o README e a LICENSE antes de usar.
+    </div>
+  </header>
+
+  <main id="topo">
+    <!-- HERO -->
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 px-4 overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-3xl opacity-80" style="background: var(--bg-glow-1)"></div>
+        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full blur-3xl" style="background: var(--bg-glow-2)"></div>
+      </div>
+      <div class="max-w-4xl mx-auto text-center relative">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-gold/5 text-gold text-xs font-medium mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-crimson animate-pulse"></span>
+          Assistente local · Python · v1.0 Completo
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+          <span class="text-gradient">Eleve o controle do seu ecossistema ao próximo nível</span>
+        </h1>
+        <p class="text-muted text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+          IA modular com reconhecimento de voz, automação do Windows, plugins,
+          memória local e <span class="text-gold">autoaperfeiçoamento diário</span> —
+          tudo em um único <code class="code-accent font-mono text-sm">jarvis.py</code>.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+          <a href="Jarvis_1.0_completo.zip" download
+             class="btn-gold font-bold text-base px-8 py-3.5 rounded-xl inline-flex items-center gap-3 shadow-lg shadow-gold/25">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/></svg>
+            Baixar J.A.R.V.I.S. (v1.0)
+          </a>
+          <a href="#recursos" class="btn-outline font-medium text-base px-6 py-3.5 rounded-xl">
+            Ver recursos
+          </a>
+        </div>
+        <p class="text-faint text-sm">Disponível para Windows / Python 3.10+</p>
+
+        <div class="mt-16 grid grid-cols-3 gap-4 max-w-lg mx-auto">
+          <div class="glass ring-gold rounded-2xl px-3 py-4 card-hover">
+            <div class="stat-num text-2xl sm:text-3xl font-bold text-gold" data-count="1200" data-suffix="+">0</div>
+            <div class="text-faint text-xs mt-1">Instalações</div>
+          </div>
+          <div class="glass ring-gold rounded-2xl px-3 py-4 card-hover">
+            <div class="stat-num text-2xl sm:text-3xl font-bold">&lt;<span data-count="50" data-suffix="">0</span>ms</div>
+            <div class="text-faint text-xs mt-1">Resposta local*</div>
+          </div>
+          <div class="glass ring-gold rounded-2xl px-3 py-4 card-hover">
+            <div class="stat-num text-2xl sm:text-3xl font-bold text-crimson-soft" data-count="1" data-suffix="">0</div>
+            <div class="text-faint text-xs mt-1">Arquivo core</div>
+          </div>
+        </div>
+        <p class="text-dim text-[10px] mt-3">*Comandos locais sem rede; IA depende do Ollama.</p>
+      </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section id="recursos" class="py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-3">
+            Recursos <span class="text-gold">principais</span>
+          </h2>
+          <p class="text-muted max-w-xl mx-auto text-sm sm:text-base">
+            Módulos reais do pacote — voz, automação, memória e expansão contínua.
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4 text-gold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Reconhecimento de Voz Adaptativo</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Embeddings personalizados (<code class="code-accent text-xs">.npy</code>), banco de amostras do dono e limiar dinâmico para aceitar só a sua voz.
+            </p>
+          </article>
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4 text-crimson-soft" style="background:rgba(196,30,58,0.1);border-color:rgba(196,30,58,0.25)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Autoaperfeiçoamento</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Às 15h pesquisa temas de programação, grava conhecimento JSON e gera propostas seguras — sem reescrever o núcleo sozinho.
+            </p>
+          </article>
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4 text-gold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Bandeja do Sistema</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Roda em segundo plano na tray do Windows, troca modo escrita/escuta e inicia com o sistema via atalho.
+            </p>
+          </article>
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Plugins &amp; Hot-Reload</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Pasta <code class="code-accent text-xs">plugins/</code> para scripts novos. Recarregue em tempo real com o comando <span class="text-muted">recarregar plugins</span>.
+            </p>
+          </article>
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4 text-gold-light">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">Automação &amp; Workspaces</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Mídia, volume, clipboard, organizador de <code class="code-accent text-xs">D:\downloads</code>, modo dev e hotkey global Ctrl+Shift+J.
+            </p>
+          </article>
+          <article class="glass ring-gold rounded-2xl p-6 card-hover">
+            <div class="w-10 h-10 rounded-xl icon-box flex items-center justify-center mb-4 text-crimson-soft" style="background:rgba(196,30,58,0.1);border-color:rgba(196,30,58,0.22)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-2">RAG &amp; Conhecimento</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Indexe PDFs e anotações em <code class="code-accent text-xs">docs_rag/</code>, pergunte aos seus docs e mantenha perfil em JSON local.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTRUTURA -->
+    <section id="estrutura" class="py-20 px-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-3">Estrutura do <span class="text-gold">projeto</span></h2>
+          <p class="text-muted text-sm">Pacote unificado — um único core Python.</p>
+        </div>
+        <div class="glass ring-gold rounded-2xl p-6 sm:p-8 font-mono text-sm overflow-x-auto">
+          <div class="flex items-center gap-2 mb-5 pb-4" style="border-bottom: 1px solid var(--nav-border)">
+            <span class="w-3 h-3 rounded-full bg-crimson/80"></span>
+            <span class="w-3 h-3 rounded-full bg-gold/80"></span>
+            <span class="w-3 h-3 rounded-full" style="background: var(--text-faint)"></span>
+            <span class="text-faint text-xs ml-2">Jarvis / explorador</span>
+          </div>
+          <ul class="space-y-1.5 text-muted">
+            <li><span class="text-gold">Jarvis/</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-crimson-soft">Iniciar_Jarvis.vbs</span> <span class="text-faint">— atalho sem console</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">jarvis.py</span> <span class="text-faint">— núcleo + todos os recursos</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> requirements.txt</li>
+            <li class="pl-4"><span class="text-faint">├──</span> README.md · LICENSE</li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">conhecimento/</span> <span class="text-faint">— perfil, regras, foco</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">memory/</span> <span class="text-faint">— memoria.json, propostas</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">plugins/</span> <span class="text-faint">— ativos.json + seus scripts</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">voices/</span> <span class="text-faint">— embeddings .npy + config</span></li>
+            <li class="pl-4"><span class="text-faint">├──</span> <span class="text-gold">docs_rag/</span> <span class="text-faint">— PDFs e notas para RAG</span></li>
+            <li class="pl-4"><span class="text-faint">└──</span> index.html <span class="text-faint">— esta landing page</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUISITOS -->
+    <section id="requisitos" class="py-20 px-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-3">Como <span class="text-gold">instalar</span></h2>
+          <p class="text-muted text-sm">Três passos. Modelo padrão: <code class="code-accent">qwen2.5:7b</code> via Ollama.</p>
+        </div>
+
+        <div class="space-y-4 mb-8">
+          <div class="glass rounded-xl px-5 py-4 flex gap-4 items-start ring-gold">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full step-num text-sm font-bold flex items-center justify-center">1</span>
+            <div>
+              <p class="font-medium">Python 3.10+ e Ollama</p>
+              <p class="text-muted text-sm mt-0.5">Instale Python no PATH e o Ollama. Depois: <code class="code-accent text-xs">ollama pull qwen2.5:7b</code></p>
+            </div>
+          </div>
+          <div class="glass rounded-xl px-5 py-4 flex gap-4 items-start ring-gold">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full step-num text-sm font-bold flex items-center justify-center">2</span>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium mb-2">Dependências</p>
+              <div class="relative terminal rounded-lg overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 border-b border-white/10 bg-white/[0.03]">
+                  <span class="term-label text-white/30 text-xs font-mono">terminal</span>
+                  <button type="button" id="btn-copy"
+                          class="text-xs px-2.5 py-1 rounded-md border border-gold/40 text-gold hover:bg-gold/10 transition-colors font-medium">
+                    Copiar
+                  </button>
+                </div>
+                <pre class="px-4 py-3 text-sm font-mono text-gold-light overflow-x-auto"><code id="install-cmd">pip install -r requirements.txt</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="glass rounded-xl px-5 py-4 flex gap-4 items-start ring-gold">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full step-num-red text-sm font-bold flex items-center justify-center">3</span>
+            <div>
+              <p class="font-medium">Iniciar</p>
+              <p class="text-muted text-sm mt-0.5">
+                Execute <code class="text-crimson-soft text-xs">Iniciar_Jarvis.vbs</code> (segundo plano) ou
+                <code class="code-accent text-xs">python jarvis.py</code> no terminal.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="Jarvis_1.0_completo.zip" download
+             class="btn-gold font-bold px-8 py-3 rounded-xl inline-flex items-center gap-2 shadow-lg shadow-gold/20">
+            Baixar pacote completo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTAÇÃO -->
+    <section id="documentacao" class="py-20 px-4 section-line">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">Documentação</h2>
+        <p class="text-muted text-sm mb-8 leading-relaxed">
+          O pacote inclui <code class="code-accent">README.md</code> com comandos de voz, bandeja,
+          autoaperfeiçoamento e solução de problemas. Licença em <code class="code-accent">LICENSE</code>.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="README.md" class="btn-outline text-sm px-5 py-2.5 rounded-lg">README.md</a>
+          <a href="LICENSE" class="btn-outline text-sm px-5 py-2.5 rounded-lg">LICENSE</a>
+          <a href="https://github.com" target="_blank" rel="noopener" class="btn-outline border-gold/30 text-gold text-sm px-5 py-2.5 rounded-lg">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-bar py-10 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-faint">
+      <p>© 2026 J.A.R.V.I.S. — Uso pessoal e educacional. Veja a <a href="LICENSE" class="text-gold hover:underline underline-offset-2">licença</a>.</p>
+      <p class="flex items-center gap-3">
+        <a href="https://github.com" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Repositório</a>
+        <span class="text-dim">·</span>
+        <span>Feito para Windows + Ollama</span>
       </p>
-    </section>
+    </div>
+  </footer>
 
-    <section class="card">
-      <h2>Instalação rápida</h2>
-      <pre>cd Jarvis
-python -m pip install -r requirements.txt
-ollama pull qwen2.5-coder:7b
-python jarvis.py</pre>
-      <p>
-        Padrão: <strong>modo escrita</strong> (só teclado). Para microfone, digite
-        <code>modo escuta</code>.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>O que inclui</h2>
-      <ul>
-        <li>Núcleo <code>jarvis.py</code> e módulos (voz, bandeja, autoaperfeiçoamento, avançados)</li>
-        <li>Modo escrita padrão + modelo de programação</li>
-        <li>Banco de voz do dono, plugins, memória local</li>
-        <li>Documentação unificada no README e licença completa de usos</li>
-        <li><code>Iniciar_Jarvis.vbs</code> (Windows, sem janela preta)</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h2>Usos e limites</h2>
-      <p>
-        Uso pessoal, educacional e profissional permitido, com redistribuição desde que a
-        LICENSE acompanhe o pacote. Proibido uso ilegal ou enganoso. Sem garantia —
-        comandos de sistema (desligar, apagar arquivos, etc.) são por sua conta.
-      </p>
-      <p>Texto integral: arquivo <span class="path">LICENSE</span> dentro do ZIP e no link acima.</p>
-    </section>
-
-    <footer>
-      <p>Jarvis 1.0 · documentação em README.md · termos em LICENSE</p>
-      <p>Abra este <code>index.html</code> na mesma pasta do <code>Jarvis_1.0.zip</code> para o botão de download funcionar.</p>
-    </footer>
-  </div>
   <script>
-    // Feedback visual no clique
-    document.getElementById("dl").addEventListener("click", function () {
-      this.textContent = "↓ Baixando…";
-      setTimeout(() => { this.textContent = "↓ Baixar Jarvis_1.0.zip"; }, 2000);
+    // Theme toggle
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
+
+    function setTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      try { localStorage.setItem('jarvis-theme', theme); } catch (e) {}
+      themeBtn.setAttribute('title', theme === 'dark' ? 'Modo claro' : 'Modo escuro');
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // Copy install command
+    const btnCopy = document.getElementById('btn-copy');
+    const installCmd = document.getElementById('install-cmd');
+    btnCopy.addEventListener('click', async () => {
+      const text = installCmd.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      const prev = btnCopy.textContent;
+      btnCopy.textContent = 'Copiado!';
+      setTimeout(() => { btnCopy.textContent = prev; }, 1800);
+    });
+
+    // Animated stats
+    function animateCount(el, target, suffix, duration = 1600) {
+      const start = performance.now();
+      function frame(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('pt-BR') + (suffix || '');
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (el.dataset.animated) return;
+        el.dataset.animated = '1';
+        animateCount(el, parseInt(el.dataset.count || '0', 10), el.dataset.suffix || '');
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('[data-count]').forEach((el) => observer.observe(el));
+
+    // Active nav
+    const sections = ['recursos', 'estrutura', 'requisitos', 'documentacao'];
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach((id) => {
+        const sec = document.getElementById(id);
+        if (sec && window.scrollY >= sec.offsetTop - 120) current = id;
+      });
+      navLinks.forEach((a) => {
+        a.classList.toggle('active', a.getAttribute('href').slice(1) === current);
+      });
     });
   </script>
 </body>
